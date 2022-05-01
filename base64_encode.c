@@ -3,15 +3,19 @@
 
 int main(){
 	int n;
-	int *size;
-	printf( "Please write the size of array: ");
-	scanf("%d",&n);
-	size = (int*)malloc (n * sizeof(int));
-	printf("\nPlease write the values of array: ");
-	for(i = 0; i<size; i++){
-		scanf("%d", &size[i]);
+	printf("Enter size of array: ");
+	scanf("%d", &n);
+	int *A = (int*)calloc(n, sizeof(int));
+	for(int i= 0; i < n; i++){
+		A[i] = i+1; 
 	}
-	printf("\nThe value of array are: ");
+	for (int i = 0; i < n; i++){
+		printf("%d", A[i]);
+	}
 
-	return 0:
+	return 0;
+
+
+
 }
+
