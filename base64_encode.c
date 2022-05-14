@@ -5,7 +5,7 @@
 
 // Takes string to be encoded as input
 // and its length and returns encoded string
-char* base64Encoder(char input_str[1000], int len_str)
+char* base64Encoder(char *input_str, int len_str)
 {
 	// Character set of base64 encoding scheme
 	char char_set[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -82,16 +82,20 @@ char* base64Encoder(char input_str[1000], int len_str)
 // Driver code
 int main()
 {
-	int len_str;
-	
-	printf("Please write something: ");
-	char input_str[1000];
-	scanf("%[^\n]s",input_str);
+	char *input_str;
+	int size;
+
+	printf("\nPlease enter the size of string: ");
+	scanf("%d", &size);
+
+	input_str = (char *)malloc((size+1) * sizeof(char));
 
 	// calculates length of string
-	int length = strlen(input_str);
+//	int length = strlen(input_str);
+	printf("Please enter someting: ");
+	scanf("%s", input_str);
 	
 	printf("Input string is : %s\n", input_str);
-	printf("Encoded string is : %s\n", base64Encoder(input_str, length));
+	printf("Encoded string is : %s\n", base64Encoder(input_str, size));
 	return 0;
 }
