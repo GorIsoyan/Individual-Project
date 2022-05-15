@@ -3,32 +3,37 @@
 #include <stdlib.h>
 
 
-// Takes string to be encoded as input
-// and its length and returns encoded string
-char* base64Encoder(char *input_str, int len_str)
+
+char* base64Encoder(char *input_string, int len_string)
 {
-	// Character set of base64 encoding scheme
-	char char_set[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	char char_set[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"; // the Base64 encoding table
 	
 	// Resultant string
-	char *res_str = (char *) malloc(1000 * sizeof(char));
+	char *res_string = (char *) malloc(len_string * sizeof(char)); // len_string is the size, which gives the user
 	
-	int index, no_of_bits = 0, padding = 0, val = 0, count = 0, temp;
-	int i, j, k = 0;
+	int index;
+	int no_of_bits = 0; 
+	int padding = 0; 
+	int val = 0; 
+	int count = -1; 
+	int temp;
+	int i = 0; 
+	int j = 0; 
+	int k = 0;
 	
 	// Loop takes 3 characters at a time from
 	// input_str and stores it in val
-	for (i = 0; i < len_str; i += 3)
+	for (i = 0; i < len_string; i += 3)
 		{
 			val = 0, count = 0, no_of_bits = 0;
 
-			for (j = i; j < len_str && j <= i + 2; j++)
+			for (j = i; j < len_string && j <= i + 2; j++)
 			{
 				// binary data of input_str is stored in val
 				val = val << 8;
 				
 				// (A + 0 = A) stores character in val
-				val = val | input_str[j];
+				val = val | input_string[j];
 				
 				// calculates how many time loop
 				// ran if "MEN" -> 3 otherwise "ON" -> 2
@@ -43,8 +48,7 @@ char* base64Encoder(char *input_str, int len_str)
 
 			// extracts all bits from val (6 at a time)
 			// and find the value of each block
-			while (no_of_bits != 0)
-			{
+			while (no_of_bits != 0)	{
 				// retrieve the value of each block
 				if (no_of_bits >= 6)
 				{
@@ -62,40 +66,38 @@ char* base64Encoder(char *input_str, int len_str)
 					index = (val << temp) & 63;
 					no_of_bits = 0;
 				}
-				res_str[k++] = char_set[index];
+				res_string[k++] = char_set[index];
 			}
 	}
 
 	// padding is done here
-	for (i = 1; i <= padding; i++)
-	{
-		res_str[k++] = '=';
+	for (i = 1; i <= padding; i++){
+		res_string[k++] = '=';
 	}
 
-	res_str[k] = '\0';
+	res_string[k] = '\0';
 
-	return res_str;
+	return res_string;
 
 }
 
 
-// Driver code
 int main()
 {
-	char *input_str;
+	char *input_string;
 	int size;
 
-	printf("\nPlease enter the size of string: ");
-	scanf("%d", &size);
+	printf("\nPlease enter the size of string greater than 1: ");
+	scanf("%d", &size);						//Take the size value from the user
 
-	input_str = (char *)malloc((size+1) * sizeof(char));
+	printf("%d\n", size);
+	input_str = (char *)malloc((size+1) * sizeof(char));		// Takes size * 1 byte
 
-	// calculates length of string
-//	int length = strlen(input_str);
-	printf("Please enter someting: ");
-	scanf("%s", input_str);
+	printf("\nPlease enter someting: ");
+	scanf("%s", input_string); 					// Take the string from the user for encoding
 	
-	printf("Input string is : %s\n", input_str);
-	printf("Encoded string is : %s\n", base64Encoder(input_str, size));
+	printf("Input string is : %s\n", input_string);
+	printf("Encoded string is : %s\n", base64Encoder(input_string, size));
 	return 0;
 }
+
